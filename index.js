@@ -3,12 +3,13 @@ const express = require('express'); //import express
 const morgan = require('morgan'); // import morgan
 
 const fs = require('fs'); //import built-in fs and path
-const path = require('require');
+const path = require('path');
 
 const app = express(); //turns into a instance of express
 // const http = require('http'); //http built-in module
 // const url = require('url'); //url built-in module
 
+// eslint-disable-next-line no-undef
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags:'a'});
 
 
