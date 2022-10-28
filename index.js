@@ -3,9 +3,12 @@ app = express(),
 bodyParser = require('body-parser'),
 uuid = require('uuid');
 
-app.use(bodyParser.json());
-app.use(morgan('common')); //as requested
+const morgan = require('morgan');
+fs = require('fs'),
+path = require('path');
 
+app.use(bodyParser.json());
+app.use(morgan('common'));
 
 let users = [
     {
@@ -284,6 +287,9 @@ app.delete('/users/:id', (req, res) => {
   }
 })
 
+app.get('/documentation', (req, res) => {
+  res.sendFile('public/documentation.html', {root: __dirname});
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
