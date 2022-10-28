@@ -1,84 +1,294 @@
-const express = require('express');
-const morgan = require('morgan');
-const fs = require('fs');
-const path = require('path');
+const express = require('express'),
+app = express(),
+bodyParser = require('body-parser'),
+uuid = require('uuid');
 
-const app = express();
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags:'a'});
+app.use(bodyParser.json());
+app.use(morgan('common')); //as requested
 
-let top10Movies = [
+
+let users = [
     {
-        title: 'A Trip to the Moon',
-        author: 'Georges Melies',
-        year: '1902'
+      id: 1,
+      name: "Silvio",
+      favoriteMovies: []
     },
     {
-        title:'Meshes of the Afternoon',
-        author: 'Maya Deren Alexandr Hackenschmied',
-        year: '1943'
+      id: 2,
+      name: "Jaque",
+      favoriteMovies: ["Nome Filme"]
     },
+  ];
+
+let movies = [
     {
-        title: 'The Great Train Robbery',
-        author: 'Edwin S. Porter',
-        year: '1903'
-    },
-    {
-        title: 'Un Chien Andalou',
-        author: 'Luis Bunuel',
-        year: '1929'
-    },
-    {
-        title: 'Night and Fog',
-        author: 'Alain Resnais',
-        year: '1956'
-    },
-    {
-        title: 'Scorpio Rising',
-        author: 'Kenneth Anger',
-        year: '1963'
-    },
-    {
-        title: 'Wavelength',
-        author: 'Michael Snow',
-        year: '1967'
-    },
-    {
-        title: 'The House Is Black',
-        author: 'Forough Farrokhzad',
-        year: '1963'
-    },
-    {
-        title: 'A Day in the Country',
-        author: 'Jean Renoir',
-        year: '1946'
-    },
-    {
-        title: 'La Jetee',
-        author: 'Chris Marker',
-        year: '1962'
-    }
+        "Title": "Nome Filme", //Add TITLE
+        "Description": "DESCRICAO DO FILME", //Add DESCRIPTION
+        "Genre": {
+          "Name": "Drama", //Add GENRE NAME
+          "Description":"é um filme dratamtico" //Add Description
+        },
+        "Director":{
+          "Name":"Luiz Pelegrin", //Add NAME
+          "Bio":"", //Add BIO
+          "Birth":1970, //Add BIRTH?
+        },
+        "ImageURL":"", //Add IMG
+        "Featured": false
+      },
+      {
+        "Title": "The Fountain",
+        "Description": "",
+        "Genre": {
+          "Name": "Drama",
+          "Description":"."
+        },
+        "Director":{
+          "Name":"",
+          "Bio":"",
+          "Birth":1970,
+        },
+        "ImageURL":"",
+        "Featured": false
+      },
+      {
+        "Title": "Filmezim",
+        "Description": "",
+        "Genre": {
+          "Name": "Drama",
+          "Description":"."
+        },
+        "Director":{
+          "Name":"",
+          "Bio":"",
+          "Birth":1970,
+        },
+        "ImageURL":"",
+        "Featured": false
+      },
+      {
+        "Title": "xxx",
+        "Description": "",
+        "Genre": {
+          "Name": "Drama",
+          "Description":"."
+        },
+        "Director":{
+          "Name":"",
+          "Bio":"",
+          "Birth":1970,
+        },
+        "ImageURL":"",
+        "Featured": false
+      },
+      {
+        "Title": "xxx",
+        "Description": "",
+        "Genre": {
+          "Name": "Drama",
+          "Description":"."
+        },
+        "Director":{
+          "Name":"",
+          "Bio":"",
+          "Birth":1970,
+        },
+        "ImageURL":"",
+        "Featured": false
+      },
+      {
+        "Title": "xxx",
+        "Description": "",
+        "Genre": {
+          "Name": "Drama",
+          "Description":"."
+        },
+        "Director":{
+          "Name":"",
+          "Bio":"",
+          "Birth":1970,
+        },
+        "ImageURL":"",
+        "Featured": false
+      },
+      {
+        "Title": "xxx",
+        "Description": "",
+        "Genre": {
+          "Name": "Drama",
+          "Description":"."
+        },
+        "Director":{
+          "Name":"",
+          "Bio":"",
+          "Birth":1970,
+        },
+        "ImageURL":"",
+        "Featured": false
+      },
+      {
+        "Title": "xxx",
+        "Description": "",
+        "Genre": {
+          "Name": "Drama",
+          "Description":"."
+        },
+        "Director":{
+          "Name":"",
+          "Bio":"",
+          "Birth":1970,
+        },
+        "ImageURL":"",
+        "Featured": false
+      },
+      {
+        "Title": "xxx",
+        "Description": "",
+        "Genre": {
+          "Name": "Drama",
+          "Description":"."
+        },
+        "Director":{
+          "Name":"",
+          "Bio":"",
+          "Birth":1970,
+        },
+        "ImageURL":"",
+        "Featured": false
+      },
+      {
+        "Title": "xxx",
+        "Description": "",
+        "Genre": {
+          "Name": "Drama",
+          "Description":"."
+        },
+        "Director":{
+          "Name":"",
+          "Bio":"",
+          "Birth":1970,
+        },
+        "ImageURL":"",
+        "Featured": false
+      },
+
 ];
 
-app.use(morgan('common', {stream: accessLogStream}));
-app.use(express.static('public'));
-
-app.get('/', (req, res) => {
-    res.send('Welcome to my short movies club - SMClub!'); 
-});
-
-app.get('/documentation', (req, res) => {
-    res.sendFile('public/documentation.html', {root: __dirname});
-});
-
+//GET movie list
 app.get('/movies', (req, res) => {
-res.json(top10Movies);
+    res.status(200).json(movies)
 });
+
+//Read title
+app.get('/movies/:title', (req, res) => {
+  const { title } = req.params;
+  const movie = movies.find(movie => movie.Title === title );
+
+  if (movie) {
+    res.status(200).json(movie);
+  } else {
+    res.status(400).send('no such movie');
+  }
+});
+
+//Read Genre
+app.get('/movies/genre/:genreName', (req, res) => {
+  const { genreName } = req.params;
+  const genre = movies.find( movie => movie.Genre.Name === genreName ).Genre;
+
+  if (genre) {
+    res.status(200).json(genre);
+  } else {
+    res.status(400).send('no such genre');
+  }
+});
+
+//Read Directors
+app.get('/movies/directors/:directorName', (req, res) => {
+  const { directorName } = req.params;
+  const director = movies.find( movie => movie.Director.Name === directorName ).Director;
+
+  if (director) {
+    res.status(200).json(director);
+  } else {
+    res.status(400).send('no such director');
+  }
+});
+
+//Create User
+app.post('/users', (req, res) => {
+  const newUser = req.body;
+
+  if (newUser.name) {
+      newUser.id = uuid.v4();
+      users.push(newUser);
+      res.status(201).json(newUser)
+    } else {
+      res.status(400).send('User need names')
+    }
+})
+
+//Update User name
+app.put('/users/:id', (req, res) => {
+  const { id } = req.params;
+  const updatedUser = req.body;
+
+  let user = users.find( user => user.id == id );
+
+  if (user) {
+    user.name = updatedUser.name;
+    res.status(200).json(user);
+  } else {
+    res.status(400).send('no such user')
+  }
+})
+
+//Update/add movie to fav list
+app.post('/users/:id/:movieTitle', (req, res) => {
+  const { id, movieTitle } = req.params;
+
+  let user = users.find( user => user.id == id);
+
+  if (user) {
+    user.favoriteMovies.push(movieTitle);
+    res.status(200).send(`${movieTitle} has been added to user ${id}'s array`);;
+  } else {
+    res.status(400).send('no such user')
+  }
+})
+
+//Delete a movie
+app.delete('/users/:id/:movieTitle', (req, res) => {
+  const { id, movieTitle } = req.params;
+
+  let user = users.find( user => user.id == id );
+
+  if (user){
+    user.favoriteMovies = user.favoriteMovies.filter( title => title !== movieTitle);
+    res.status(200).send(`${movieTitle} has been removed from user ${id}'s array`);;
+  } else {
+    res.status(400).send ('no such user')
+  }
+
+})
+
+//Delete User
+app.delete('/users/:id', (req, res) => {
+  const { id } = req.params;
+  let user = users.find( user => user.id == id );
+
+  if (user) {
+    res.status(200).send(`user ${id} has been deleted`);;
+  } else {
+    res.status(400).send('no such user')
+  }
+})
+
 
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-  });
-
-app.listen(8080, () => {
-    console.log('Your app is listening on port8080.');
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
+
+
+app.listen(8080, () => console.log("listening on 8080"))
