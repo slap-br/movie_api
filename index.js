@@ -34,7 +34,7 @@ let movies = [
         "Director":{
           "Name":"Luiz Pelegrin", //Add NAME
           "Bio":"", //Add BIO
-          "Birth":1970, //Add BIRTH?
+          "Birth":"1970", //Add BIRTH?
         },
         "ImageURL":"", //Add IMG
         "Featured": false
@@ -85,48 +85,48 @@ let movies = [
         "Featured": false
       },
       {
-        "Title": "xxx",
-        "Description": "",
+        "Title":"A Trip to the Moon",
+        "Description":"At a meeting of the Astronomy Club, its president, Professor Barbenfouillis,[b][c] proposes an expedition to the Moon. After addressing some dissent, five other brave astronomers—Nostradamus,[d] Alcofrisbas,[e] Omega, Micromegas,[f] and Parafaragaramus—agree to the plan. A space capsule in the shape of a bullet is built, along with a huge cannon to shoot it into space. ",
         "Genre": {
-          "Name": "Drama",
-          "Description":"."
+          "Name": "Adventure",
+          "Description":"An adventure film is a form of adventure fiction, and is a genre of film. Subgenres of adventure films include swashbuckler films, pirate films, and survival films. Adventure films may also be combined with other film genres such as action, animation, comedy, drama, fantasy, science fiction, family, horror, or war."
         },
         "Director":{
-          "Name":"",
-          "Bio":"",
-          "Birth":1970,
+          "Name":"Georges Méliès",
+          "Bio":"Méliès was well known for the use of special effects, popularizing such techniques as substitution splices, multiple exposures, time-lapse photography, dissolves, and hand-painted colour. He was also one of the first filmmakers to use storyboards.[2] His films include A Trip to the Moon (1902) and The Impossible Voyage (1904), both involving strange, surreal journeys somewhat in the style of Jules Verne, and are considered among the most important early science fiction films, though their approach is closer to fantasy.",
+          "Birth":"1970",
         },
-        "ImageURL":"",
+        "ImageURL":"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTTUhAK-uV_OUXBusvfvF7zmpINSpEMasC1sKVdnXXDqy8NFFd5",
         "Featured": false
       },
       {
-        "Title": "xxx",
-        "Description": "",
+        "Title": "The House is Black",
+        "Description":"The film is a look at life and suffering in a leper colony and focuses on the human condition and the beauty of creation.[1][2] It is spliced with Farrokhzad's narration of quotes from the Old Testament, the Koran and her own poetry. The film features footage from the Bababaghi Hospice leper colony.[3] It was the only film she directed before her death in 1967. After shooting this film she adopted a child from the colony.[4][5]",
         "Genre": {
-          "Name": "Drama",
-          "Description":"."
+          "Name": "Documentary",
+          "Description":" documentary is a film or video examining an event or person based on facts. The word can also refer to anything involving documents."
         },
         "Director":{
-          "Name":"",
-          "Bio":"",
-          "Birth":1970,
+          "Name":"Forugh Farrokhzad",
+          "Bio":"Forugh Farrokhzad (Persian: فروغ فرخزاد;[2] 28 December 1934 – 13 February 1967) was an influential Iranian poet and film director.[3] She was a controversial modernist poet and an iconoclast,[4] writing from a female point of view.[5][6]Forugh Farrokhzad died at the age of 32 due to a car overturn.",
+          "Birth":"1934",
         },
-        "ImageURL":"",
+        "ImageURL":"https://upload.wikimedia.org/wikipedia/en/5/5f/The_house_is_black.jpg",
         "Featured": false
       },
       {
-        "Title": "xxx",
-        "Description": "",
+        "Title":"The Windshield Wiper",
+        "Description":"Inside a cafe while smoking a whole pack of cigarettes, a man poses an ambitious question: What is Love?. A collection of vignettes and situations will lead the man to the desired conclusion.",
         "Genre": {
-          "Name": "Drama",
-          "Description":"."
+          "Name":"Adult Animation",
+          "Description":"Adult animation, also known as mature animation, and infrequently as adult-oriented animation, is any type of animated motion work that is catered specifically to adult interests, and is mainly targeted and marketed towards adults and adolescents, as opposed to children or all-ages audiences."
         },
         "Director":{
-          "Name":"",
-          "Bio":"",
-          "Birth":1970,
+          "Name":"Alberto Mielgo",
+          "Bio":"is a Spanish director, artist, and animator. His accolades include an Academy Award, four Emmy Awards[1] and two Annie Awards.",
+          "Birth":"1979",
         },
-        "ImageURL":"",
+        "ImageURL":"https://upload.wikimedia.org/wikipedia/en/4/40/TheWindshieldWiperShort.jpg",
         "Featured": false
       },
       {
@@ -218,7 +218,7 @@ app.get('/movies/directors/:directorName', (req, res) => {
   }
 });
 
-//Create User
+//Register User
 app.post('/users', (req, res) => {
   const newUser = req.body;
 
