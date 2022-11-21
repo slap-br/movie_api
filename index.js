@@ -1,13 +1,22 @@
 const express = require('express'),
-app = express(),
 bodyParser = require('body-parser'),
 uuid = require('uuid');
+const morgan = require('morgan'); //loggin middleware
 
-const morgan = require('morgan');
+app = express(),
 fs = require('fs'),
 path = require('path');
 
+const mongoose = require('mongoose');
+const models = require('./models.js');
+const Movies = models.Movie;
+const Users = models.User;
+const Genres = models.Genre;
+const Directors = models.Directors;
+
+mongoose.connect('mongodb://localhost:27017/smClub', { useNewUrlParser: true, useUnifiedTopology: true });
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // line added according to exercise 
 app.use(morgan('common'));
 
 let users = [
@@ -220,16 +229,30 @@ app.get('/movies/directors/:directorName', (req, res) => {
 
 //Register User
 app.post('/users', (req, res) => {
-  const newUser = req.body;
-
-  if (newUser.name) {
-      newUser.id = uuid.v4();
-      users.push(newUser);
-      res.status(201).json(newUser)
-    } else {
-      res.status(400).send('User need names')
-    }
-})
+  Users.findOne({ Username: req.body.Username })
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(req.body.Username + 'already exists');
+      } else {
+        Users
+          .create({
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+          })
+          .then((user) =>{res.status(201).json(user) })
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        })
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
+});
 
 //Update User name
 app.put('/users/:id', (req, res) => {
