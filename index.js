@@ -27,9 +27,23 @@ app.get ( "/", (req,res) => {
   res.send("Welcome to my Flix!");
 });
 
+// User section
+
 // Get a user by username
 app.get('/users/:Username', (req, res) => {
   Users.findOne({ Username: req.params.Username })
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+// Get all users
+app.get('/users', (req, res) => {
+  Users.find()
     .then((user) => {
       res.json(user);
     })
@@ -113,7 +127,19 @@ app.delete('/users/:Username', (req, res) => {
     });
 });
 
+// Movies Section
 
+// Get all movies
+app.get('/movies', (req, res) => {
+  Movies.find()
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
