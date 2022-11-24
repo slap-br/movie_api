@@ -7,6 +7,10 @@ app = express(),
 fs = require('fs'),
 path = require('path');
 
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
+
 const mongoose = require('mongoose');
 const models = require('./models.js');
 const Movies = models.Movie;
@@ -21,6 +25,8 @@ mongoose.connect('mongodb://localhost:27017/smClub', {
 
 app.use(bodyParser.json());
 app.use(morgan('common'));
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //Default text response when at /
 app.get ( "/", (req,res) => {
@@ -141,7 +147,7 @@ app.delete('/users/:Username', (req, res) => {
 
 // Movies Section
 // Get all movies
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
     .then((user) => {
       res.json(user);
