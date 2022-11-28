@@ -180,7 +180,7 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
 
 //Get Json movie looking for a title
 app.get("/movies/:Title", passport.authenticate('jwt', { session: false }),  (req,res) => {
-  Movies.findOne({ Title: req.params.Title})
+  Movies.findOne({ 'Title': req.params.Title})
   .then((movie) => {
       res.json(movie);
   })
@@ -191,8 +191,8 @@ app.get("/movies/:Title", passport.authenticate('jwt', { session: false }),  (re
 });
 
 //Movie by Genre
-app.get("/genre/:Name", passport.authenticate('jwt', { session: false }),  (req,res) =>{
-  Genres.findOne({ 'Name': req.params.Name })
+app.get("/genre/:genreName", passport.authenticate('jwt', { session: false }),  (req,res) =>{
+  Genres.findOne({ 'Genre.Name': req.params.genreName })
   .then((genre) =>{
       res.json(genre.Description);
   })
@@ -204,7 +204,7 @@ app.get("/genre/:Name", passport.authenticate('jwt', { session: false }),  (req,
 
 //Movie by Director
 app.get("/director/:Name", passport.authenticate('jwt', { session: false }), (req,res) => {
-  Directors.findOne({ Name: req.params.Name})
+  Directors.findOne({'DirectorName': req.params.directorName})
   .then((director) => {
       res.json(director);
   })
