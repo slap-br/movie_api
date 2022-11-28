@@ -168,8 +168,8 @@ app.post('/users',
 // Get all movies
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
-    .then((user) => {
-      res.json(user);
+    .then((movies) => {
+      res.json(movies);
     })
     .catch((err) => {
       console.error(err);
