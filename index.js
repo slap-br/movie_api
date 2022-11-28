@@ -88,7 +88,8 @@ app.put('/users/:Username',
     passport.authenticate('jwt', { session: false }),
   ],
   (req, res) => {
-    let errors = validationResult(req);    // check validation object for errors
+    // check validation object for errors
+    let errors = validationResult(req);
 
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
@@ -113,10 +114,8 @@ app.put('/users/:Username',
         } else {
           res.json(updatedUser);
         }
-      }
-    );
-  }
-);
+      });
+  });
 
 //add new user
 app.post('/users',
