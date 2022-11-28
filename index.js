@@ -49,7 +49,7 @@ app.get ( "/", (req,res) => {
 // Get a user by username
 app.get('/users/:Username', passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Users.find()
+    Users.findOne()
       .then((user) => {
         res.status(200).json(user);
       })
@@ -64,9 +64,9 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }),
 app.get('/users',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Users.find()
-      .then((user) => {
-        res.status(200).json(user);
+    Users.findOne()
+      .then((users) => {
+        res.status(200).json(users);
       })
       .catch((err) => {
         console.error(err);
