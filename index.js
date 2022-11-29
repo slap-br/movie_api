@@ -216,17 +216,22 @@ app.get( '/movies/genre/:genreName', passport.authenticate('jwt', { session: fal
       res.status(500).send("Error: " +err);
   });
 });
+
 //Movie by Director
-app.get('/movies/directors/:directorName', passport.authenticate('jwt', { session: false }),(req, res) => {
-  Movies.findOne({ 'Director.Name': req.params.directorName })
-  .then((movie) => {
-      res.json(director);
-  })
-  .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-  });
-});
+app.get(
+  '/movies/directors/:directorName',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Movies.findOne({ 'Director.Name': req.params.directorName })
+      .then((movie) => {
+        res.json(movie.Director);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      });
+  }
+);
 
 //Add a movie to users list of favs
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
