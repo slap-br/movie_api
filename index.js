@@ -47,24 +47,24 @@ app.get ( "/", (req,res) => {
 // User section
 
 // Get a user by username
-app.get('/users/:Username', passport.authenticate('jwt', { session: false }),
+app.get('/users/:Username',
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Users.findOne()
+    Users.findOne({ Username: req.params.Username })
       .then((user) => {
-        res.status(200).json(user);
+        res.json(user);
       })
       .catch((err) => {
         console.error(err);
         res.status(500).send('Error: ' + err);
       });
-  }
-);
+  });
 
 // Get all users
 app.get('/users',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Users.findOne()
+    Users.find()
       .then((users) => {
         res.status(200).json(users);
       })
@@ -74,6 +74,7 @@ app.get('/users',
       });
   }
 );
+
 
 //Update User data
 app.put('/users/:Username',
@@ -136,8 +137,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
   });
 
 //add new user
-app.post(
-  '/users',
+app.post('/users',
   [
     check('Username', 'Username is required').isLength({ min: 5 }),
     check(
