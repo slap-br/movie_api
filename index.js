@@ -114,8 +114,10 @@ app.put('/users/:Username',
         } else {
           res.json(updatedUser);
         }
-      });
-  });
+      }
+    );
+  }
+);
 
 //Delete User Data
 app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
