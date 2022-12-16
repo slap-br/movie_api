@@ -29,14 +29,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 //Banco de dados local
-  // mongoose.connect('mongodb://localhost:27017/smClub', { 
-  //    useNewUrlParser: true, 
-  //   useUnifiedTopology: true 
-  // });
+    //  mongoose.connect('mongodb://localhost:27017/smClub', { 
+    //    useNewUrlParser: true, 
+    //    useUnifiedTopology: true 
+    //  });
 mongoose.connect( process.env.CONNECTION_URI, 
-    {
-     useNewUrlParser: true, 
-      useUnifiedTopology: true 
+     {
+      useNewUrlParser: true, 
+       useUnifiedTopology: true 
      });
 
 //Default text response when at /
@@ -184,7 +184,7 @@ app.post('/users',
 );
 
 // Get all movies
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }),  (req, res) => {
   Movies.find()
     .then((movies) => {
       res.json(movies);
